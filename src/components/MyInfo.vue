@@ -20,8 +20,8 @@ export default {
   data () {
     return {
       my_info:[
-        {title:'年龄',text:'22岁',icon:'icon-nianling',anim:false},
-        {title:'经验',text:'1.5年',icon:'icon-gongzuojingyan',anim:false},
+        {title:'年龄',text:'24岁',icon:'icon-nianling',anim:false},
+        {title:'经验',text:'2年',icon:'icon-gongzuojingyan',anim:false},
         {title:'坐标',text:'杭州',icon:'icon-address',anim:false},
         {title:'状态',text:'在职',icon:'icon-zhuangtai',anim:false},
       ],

@@ -23,9 +23,6 @@
 export default {
 	props: ['navIndex'],
 	name: 'HelloWorld',
-
-
-
 	data () {
 		return {
 			header_list: ['灵感', '代码', '梦想', '未来'],

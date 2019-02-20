@@ -35,23 +35,23 @@ export default {
 	data () {
 		return {
 			inner_skill:[
-				{text:'react',color:'rgba(179,164,140,0.8)'},
+				{text:'Node.js',color:'rgba(179,164,140,0.8)'},
 				{text:'ES6',color:'rgba(171,209,220,0.8)'},
 				{text:'vue',color:'rgba(238,215,163,0.8)'},
-				{text:'less',color:'rgba(207,184,178,0.8)'},
+				{text:'微信\n小程序',color:'rgba(207,184,178,0.8)'},
 			],
 			out_skill:[
-				{text:'微信小\n程序',color:'rgba(121,100,102,0.8)'},
+				{text:'less',color:'rgba(121,100,102,0.8)'},
 				{text:'hbuilder\nh5+',color:'rgba(49,65,82,0.8)'},
 				{text:'jQuery',color:'rgba(76,157,160,0.8)'},
 				{text:'webpack',color:'rgba(66,66,66,0.8)'},
-				{text:'微信小\n游戏',color:'rgba(193,131,106,0.8)'},
-				{text:'RN',color:'rgba(117,148,179,0.8)'},
-				{text:'PHP\nMySQL',color:'rgba(71,83,94,0.8)'},
-				{text:'GitHub',color:'rgba(147,147,189,0.8)'},
+				{text:'微信\n小游戏',color:'rgba(193,131,106,0.8)'},
+				{text:'react',color:'rgba(117,148,179,0.8)'},
+				{text:'apicloud',color:'rgba(71,83,94,0.8)'},
+				{text:'Git',color:'rgba(147,147,189,0.8)'},
 			],
 			text: [
-				'精通小程序开发及框架搭建配置',
+				'精通小程序开发及vue单页面开发',
 				'扎实的HTML5+CSS3基础',
 				'了解APP/PC端/手机端的各类开发',
 				'良好的逻辑思维，快速思考解决方法',
