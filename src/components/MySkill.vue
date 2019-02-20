@@ -6,7 +6,7 @@
             	<div class="outCircle"></div>
             	<div>
 	                <li class="out" v-for="(item,index) in out_skill" :key="index">
-		                <div class="out-item justify-center" :style="{backgroundColor:item.color}">{{item.text}}</div>
+		                <span class="out-item justify-center" :style="{backgroundColor:item.color}" v-html='item.text'></span>
 	                </li>
             	</div>
             </ul>
@@ -14,7 +14,7 @@
             	<div class="innerCircle"></div>
             	<div>
 	                <li class="inner" v-for="(item,index) in inner_skill" :key="index">
-		                <div class="inner-item justify-center" :style="{backgroundColor:item.color}">{{item.text}}</div>
+		                <span class="inner-item justify-center" :style="{backgroundColor:item.color}" v-html='item.text'></span>
 	                </li>
             	</div>
             </ul>
@@ -38,17 +38,17 @@ export default {
 				{text:'Node.js',color:'rgba(179,164,140,0.8)'},
 				{text:'ES6',color:'rgba(171,209,220,0.8)'},
 				{text:'vue',color:'rgba(238,215,163,0.8)'},
-				{text:'微信\n小程序',color:'rgba(207,184,178,0.8)'},
+				{text:'微信<br>小程序',color:'rgba(207,184,178,0.8)'},
 			],
 			out_skill:[
 				{text:'less',color:'rgba(121,100,102,0.8)'},
-				{text:'hbuilder\nh5+',color:'rgba(49,65,82,0.8)'},
+				{text:'hbuilder<br>h5+',color:'rgba(49,65,82,0.8)'},
 				{text:'jQuery',color:'rgba(76,157,160,0.8)'},
 				{text:'webpack',color:'rgba(66,66,66,0.8)'},
-				{text:'微信\n小游戏',color:'rgba(193,131,106,0.8)'},
+				{text:'微信<br>小游戏',color:'rgba(193,131,106,0.8)'},
 				{text:'react',color:'rgba(117,148,179,0.8)'},
 				{text:'apicloud',color:'rgba(71,83,94,0.8)'},
-				{text:'Git',color:'rgba(147,147,189,0.8)'},
+				{text:'Git<br>SVN',color:'rgba(147,147,189,0.8)'},
 			],
 			text: [
 				'精通小程序开发及vue单页面开发',
