@@ -17,7 +17,7 @@ const show = (_this) => {
 		len   = list.length,
 		index = _this.anim_index
 
-	if (_this.anim_index >= len) { 
+	if (index >= len) { 
 		if (_this.time) {
 			clearInterval(_this.time);
 			_this.time = null;

@@ -20,7 +20,10 @@
 </template>
 
 <script>
+import {mixin} from '@/js/mixins'
+
 export default {
+	mixins: [mixin],
 	props: ['navIndex'],
 	name: 'HelloWorld',
 	data () {
@@ -41,13 +44,9 @@ export default {
 				{ icon: 'icon-homephone', text: '13566296373' }, 
 			],
 			anim_index: 0,
+			anim_now: 5,
 			anim_list: [],
 		}
-	},
-	watch: {
-		navIndex: function (val) {
-			api.animCreate(this, val, 5, 100)
-		},
 	},
 	methods:{
 

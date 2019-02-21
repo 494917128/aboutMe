@@ -9,7 +9,10 @@
 </template>
 
 <script>
+import {mixin} from '@/js/mixins'
+
 export default {
+  mixins: [mixin],
   props: ['navIndex'],
   name: 'HelloWorld',
   data () {
@@ -20,13 +23,9 @@ export default {
         '感谢您查看我的网页简历'
       ],
       anim_index: 0,
+      anim_now: 0,
       anim_list: [],
     }
-  },
-  watch: {
-    navIndex: function (val) {
-      api.animCreate(this, val, 0, 200)
-    },
   },
   mounted(){
     // 创建动画列表

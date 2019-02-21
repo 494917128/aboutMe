@@ -30,7 +30,10 @@
 </template>
 
 <script>
+import {mixin} from '@/js/mixins'
+
 export default {
+	mixins: [mixin],
 	props: ['navIndex'],
 	name: 'HelloWorld',
 	data () {
@@ -58,6 +61,7 @@ export default {
 				},
 			],
 			anim_index: 0,
+			anim_now: 4,
 			anim_list: [],
 			anim_type: '',
 			show_modal: false,
@@ -66,7 +70,6 @@ export default {
 	},
 	watch: {
 		navIndex: function (val) {
-			api.animCreate(this, val, 4, 200)
 			if(this.show_modal) this.closeModal()
 		},
 	},
@@ -142,7 +145,7 @@ export default {
 		window.onresize = function() { 
 			if (((document.documentElement.clientWidth <= 600) && _this.anim_type == 'pc') || ((document.documentElement.clientWidth > 600) && _this.anim_type == 'phone')) {
 				_this.judgeAnim()
-				api.animCreate(_this, _this.navIndex, 4, 200)
+				_this.animCreate(_this.navIndex, _this.anim_now, _this.anim_time||200)
 			}			
 		}
 		this.judgeAnim()

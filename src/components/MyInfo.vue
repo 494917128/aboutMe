@@ -14,7 +14,10 @@
 </template>
 
 <script>
+import {mixin} from '@/js/mixins'
+
 export default {
+  mixins: [mixin],
   props: ['title','navIndex'],
   name: 'HelloWorld',
   data () {
@@ -32,13 +35,9 @@ export default {
         "高效的工作效率，对工作目标明确执行",
       ],
       anim_index: 0,
+      anim_now: 1,
       anim_list: [],
     }
-  },
-  watch: {
-    navIndex: function (val) {
-      api.animCreate(this, val, 1, 200)
-    },
   },
   methods: {
 
