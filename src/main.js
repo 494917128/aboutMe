@@ -10,8 +10,6 @@ import './fonts/iconfont.css'
 import './css/swiper.min.css'
 import {Swiper} from 'vue-awesome-swiper'
 window.Swiper = Swiper
-import api from './js/api.js'
-window.api = api
 
 import './css/main.css'
 
