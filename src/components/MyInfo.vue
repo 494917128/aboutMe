@@ -14,54 +14,66 @@
 </template>
 
 <script>
-import {mixin} from '@/js/mixins'
+import {anim,api} from '@/js/mixins'
 
 export default {
-  mixins: [mixin],
+  mixins: [anim,api],
   props: ['title','navIndex'],
   name: 'HelloWorld',
   data () {
     return {
-      my_info:[
-        {title:'年龄',text:'24岁',icon:'icon-nianling',anim:false},
-        {title:'经验',text:'2年',icon:'icon-gongzuojingyan',anim:false},
-        {title:'坐标',text:'杭州',icon:'icon-address',anim:false},
-        {title:'状态',text:'在职',icon:'icon-zhuangtai',anim:false},
-      ],
-      text: [
-        "热爱IT，热爱编程，热爱学习，处于饥饿状态",
-        "对于代码要求高内聚低耦合，复用性、可读性高",
-        "良好的自学能力，具备独立分析解决问题能力",
-        "高效的工作效率，对工作目标明确执行",
-      ],
+      my_info:[],
+      text: [],
       anim_index: 0,
       anim_now: 1,
       anim_list: [],
     }
   },
-  methods: {
+  watch: {
+    my_info: function(){
+      var _this = this 
+      this.$nextTick(function(){
+        _this.setAnim()
+      })
+    }
+  },
 
+  methods: {
+    // 获取数据
+    pageData(){
+      var _this = this
+      this.post({
+        url: 'info/index',
+        data: {},
+        success: function(res){
+          _this.my_info = res.info
+          _this.text = res.text
+        }
+      })
+    },
+    // 创建动画列表
+    setAnim(){
+      let list = this.anim_list,
+          view = document.querySelectorAll(".my-info .info-item-view"),
+          text = document.querySelectorAll(".my-info .text")
+
+      for(let i = 0,len = view.length; i < len; i++){
+        list.push({
+          dom: view[i],
+          class: 'anim'
+        })
+      }
+
+      for(let i = 0,len = text.length; i < len; i++){
+        list.push({
+          dom: text[i],
+          class: 'anim'
+        })
+      }
+    },
   },
   mounted(){
-    // 创建动画列表
-    let list = this.anim_list,
-        view = document.querySelectorAll(".my-info .info-item-view"),
-        text = document.querySelectorAll(".my-info .text")
-
-    for(let i = 0,len = view.length; i < len; i++){
-      list.push({
-        dom: view[i],
-        class: 'anim'
-      })
-    }
-
-    for(let i = 0,len = text.length; i < len; i++){
-      list.push({
-        dom: text[i],
-        class: 'anim'
-      })
-    }
-
+    this.pageData()
   },
 }
 </script>
@@ -79,7 +91,6 @@ export default {
   margin: 0 auto 5vh;
 }
 .info-item-view{
-  width: 25%;
   flex-direction: column;
 }
 .info-item{

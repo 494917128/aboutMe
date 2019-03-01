@@ -20,10 +20,10 @@
 </template>
 
 <script>
-import {mixin} from '@/js/mixins'
+import {anim,api} from '@/js/mixins'
 
 export default {
-	mixins: [mixin],
+	mixins: [anim,api],
 	props: ['navIndex'],
 	name: 'HelloWorld',
 	data () {

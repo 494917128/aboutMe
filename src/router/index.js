@@ -6,9 +6,10 @@ import index from '@/pages/index'
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
-      path: '/',
+      path: '*',
       name: 'index',
       component: index
     }

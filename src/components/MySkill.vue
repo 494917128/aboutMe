@@ -5,16 +5,27 @@
             <ul class="outView">
             	<div class="outCircle"></div>
             	<div>
-	                <li class="out" v-for="(item,index) in out_skill" :key="index">
-		                <span class="out-item justify-center" :style="{backgroundColor:item.color}" v-html='item.text'></span>
+	                <li class="out" :style="{
+	                	animationDelay:-(index/out_skill.length*out_duration)+'s',
+	                	animationDuration: out_duration+'s',}" v-for="(item,index) in out_skill" :key="index">
+		                <span class="out-item justify-center" 
+		                	:style="{
+		                		backgroundColor:item.color,
+		                		animationDelay:-(index/out_skill.length*out_duration)+'s',
+		                		animationDuration: out_duration+'s',}" v-html='item.text'></span>
 	                </li>
             	</div>
             </ul>
             <ul class="innerView">
             	<div class="innerCircle"></div>
             	<div>
-	                <li class="inner" v-for="(item,index) in inner_skill" :key="index">
-		                <span class="inner-item justify-center" :style="{backgroundColor:item.color}" v-html='item.text'></span>
+	                <li class="inner" :style="{
+	                	animationDelay:-(index/inner_skill.length*inner_duration)+'s',
+	                	animationDuration: inner_duration+'s',}" v-for="(item,index) in inner_skill" :key="index">
+		                <span class="inner-item justify-center" :style="{
+		                		backgroundColor:item.color,
+		                		animationDelay:-(index/inner_skill.length*inner_duration)+'s',
+		                		animationDuration: inner_duration+'s',}" v-html='item.text'></span>
 	                </li>
             	</div>
             </ul>
@@ -29,14 +40,16 @@
 </template>
 
 <script>
-import {mixin} from '@/js/mixins'
+import {anim,api} from '@/js/mixins'
 
 export default {
-	mixins: [mixin],
+	mixins: [anim,api],
 	props: ['navIndex'],
 	name: 'HelloWorld',
 	data () {
 		return {
+			inner_duration: 6,
+			out_duration: 8,
 			inner_skill:[
 				{text:'Node.js',color:'rgba(179,164,140,0.8)'},
 				{text:'ES6',color:'rgba(171,209,220,0.8)'},
@@ -65,48 +78,71 @@ export default {
 			anim_list: [],
 		}
 	},
-	methods:{
-
+	watch: {
+		inner_skill: function(){
+			var _this = this 
+			this.$nextTick(function(){
+				_this.setAnim()
+			})
+		}
 	},
-	mounted () { 
+	methods: {
+		// 获取数据
+		pageData(){
+			var _this = this
+			this.post({
+				url: 'info/index',
+				data: {},
+				success: function(res){
+					_this.my_info = res.info
+					_this.text = res.text
+				}
+			})
+		},
 		// 创建动画列表
-		let list        = this.anim_list,
-		    out         = document.querySelectorAll(".my-skill .out-item"),
-		    inner       = document.querySelectorAll(".my-skill .inner-item"),
-	        text        = document.querySelectorAll(".my-skill .text"),
-		    innerCircle = document.querySelector(".my-skill .innerCircle"),
-		    outCircle   = document.querySelector(".my-skill .outCircle")
+		setAnim(){
+			let list        = this.anim_list,
+			    out         = document.querySelectorAll(".my-skill .out-item"),
+			    inner       = document.querySelectorAll(".my-skill .inner-item"),
+		        text        = document.querySelectorAll(".my-skill .text"),
+			    innerCircle = document.querySelector(".my-skill .innerCircle"),
+			    outCircle   = document.querySelector(".my-skill .outCircle")
 
-		list.push({
-			dom: innerCircle,
-			class: 'anim'
-		})
-
-		for(let i = 0,len = inner.length; i < len; i++){
 			list.push({
-				dom: inner[i],
+				dom: innerCircle,
 				class: 'anim'
 			})
-		}
 
-		list.push({
-			dom: outCircle,
-			class: 'anim'
-		})
+			for(let i = 0,len = inner.length; i < len; i++){
+				list.push({
+					dom: inner[i],
+					class: 'anim'
+				})
+			}
 
-		for(let i = 0,len = out.length; i < len; i++){
 			list.push({
-				dom: out[i],
+				dom: outCircle,
 				class: 'anim'
 			})
-		}
 
-		for(let i = 0,len = text.length; i < len; i++){
-			list.push({
-				dom: text[i],
-				class: 'anim'
-			})
-		}
+			for(let i = 0,len = out.length; i < len; i++){
+				list.push({
+					dom: out[i],
+					class: 'anim'
+				})
+			}
+
+			for(let i = 0,len = text.length; i < len; i++){
+				list.push({
+					dom: text[i],
+					class: 'anim'
+				})
+			}
+		},
+	},
+	mounted(){
+		this.pageData()
+				this.setAnim()
 
 	}
 }
@@ -180,30 +216,16 @@ export default {
     height: 40px;
     border-radius: 50%;
     position: absolute;
+    top: -20px;
+    left: 0;
+    right: 0;
+    margin: auto;
     text-align: center;
-    .-inner(4);
+    transform-origin: 50% 91px;
+    animation: innerAnim linear infinite;
 }
-.-inner(@n) when (@n > 0) {
-  &:nth-child(@{n}) {
-    animation: innerX 4s cubic-bezier(.36,0,.64,1) (@n * -2s) infinite alternate,innerY 4s cubic-bezier(.36,0,.64,1) ((@n - 1) * -2s) infinite alternate;
-  }
-  .-inner((@n - 1));
-}
-@keyframes innerX{
-	0% {
-	    left: -22px;
-	}
-	100% {
-	    left: 122px;
-	}
-}
-@keyframes innerY{
-	0% {
-	    top: 122px;
-	}
-	100% {
-	    top: -22px;
-	}
+.inner-item{
+    animation: outAnim linear infinite;
 }
 
 .out {
@@ -211,29 +233,32 @@ export default {
     height: 50px;
     border-radius: 50%;
     position: absolute;
+    top: -25px;
+    left: 0;
+    right: 0;
+    margin: auto;
     text-align: center;
-    .-out(8)
+    transform-origin: 50% 146px;
+    animation: outAnim linear infinite;
 }
-.-out(@n) when (@n > 0) {
-  &:nth-child(@{n}) {
-    animation: outX 8s cubic-bezier(.36,0,.64,1) ((@n + 1) * -2s) infinite alternate,outY 8s cubic-bezier(.36,0,.64,1) ((@n - 1) * -2s) infinite alternate;
-  }
-  .-out((@n - 1));
+.out-item{
+    animation: innerAnim linear infinite;
 }
-@keyframes outX{
+
+@keyframes innerAnim{
 	0% {
-	    left: -27px;
+	    transform: rotate(0)
 	}
 	100% {
-	    left: 217px;
+	    transform: rotate(360deg)
 	}
 }
-@keyframes outY{
+@keyframes outAnim{
 	0% {
-	    top: -27px;
+	    transform: rotate(360deg)
 	}
 	100% {
-	    top: 217px;
+	    transform: rotate(0)
 	}
 }
 

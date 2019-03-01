@@ -30,10 +30,10 @@
 </template>
 
 <script>
-import {mixin} from '@/js/mixins'
+import {anim,api} from '@/js/mixins'
 
 export default {
-	mixins: [mixin],
+	mixins: [anim,api],
 	props: ['navIndex'],
 	name: 'HelloWorld',
 	data () {
@@ -122,7 +122,7 @@ export default {
 		},
 	},
 	mounted () { 
-		new Swiper('.swiper-product', {
+		new this.$Swiper('.swiper-product', {
 			loop: true,	
 			effect: 'cube',
 			grabCursor: true,

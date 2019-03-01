@@ -9,49 +9,69 @@
 </template>
 
 <script>
-import {mixin} from '@/js/mixins'
+import {anim,api} from '@/js/mixins'
 
 export default {
-  mixins: [mixin],
+  mixins: [anim,api],
   props: ['navIndex'],
   name: 'HelloWorld',
   data () {
     return {
-      text: [
-        '我叫王尔迪',
-        '一名前端开发工程师',
-        '感谢您查看我的网页简历'
-      ],
+      text: [],
       anim_index: 0,
       anim_now: 0,
       anim_list: [],
     }
   },
-  mounted(){
-    // 创建动画列表
-    let list  = this.anim_list,
-        photo = document.querySelector(".my-intro .photo"),
-        line  = document.querySelector(".my-intro .line"),
-        text  = document.querySelectorAll(".my-intro .text-item")
-
-    list.push({
-      dom: photo,
-      class: 'anim-photo'
-    })
-
-    list.push({
-      dom: line,
-      class: 'anim-line'
-    })
-
-    for(let i = 0,len = text.length; i < len; i++){
-      list.push({
-        dom: text[i],
-        class: 'anim'
+  watch: {
+    text: function(){
+      var _this = this 
+      this.$nextTick(function(){
+        _this.setAnim()
       })
     }
+  },
+  methods: {
+    // 获取数据
+    pageData(){
+      var _this = this
+      this.post({
+        url: 'intro/index',
+        data: {},
+        success: function(res){
+          _this.text = res.list
+        }
+      })
+    },
+    // 创建动画列表
+    setAnim(){
+      let list  = this.anim_list,
+          photo = document.querySelector(".my-intro .photo"),
+          line  = document.querySelector(".my-intro .line"),
+          text  = document.querySelectorAll(".my-intro .text-item")
 
-    api.animCreate(this, this.navIndex, 0, 200)
+      list.push({
+        dom: photo,
+        class: 'anim-photo'
+      })
+
+      list.push({
+        dom: line,
+        class: 'anim-line'
+      })
+
+      for(let i = 0,len = text.length; i < len; i++){
+        list.push({
+          dom: text[i],
+          class: 'anim'
+        })
+      }
+
+      this.animCreate(this.navIndex, this.anim_now, this.anim_time||200)
+    },
+  },
+  mounted(){
+    this.pageData()
   },
 }
 </script>

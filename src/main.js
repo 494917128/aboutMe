@@ -9,7 +9,9 @@ import './fonts/iconfont.css'
 
 import './css/swiper.min.css'
 import {Swiper} from 'vue-awesome-swiper'
-window.Swiper = Swiper
+Vue.prototype.$Swiper = Swiper
+import axios from 'axios'
+Vue.prototype.$axios = axios
 
 import './css/main.css'
 

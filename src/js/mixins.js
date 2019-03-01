@@ -1,4 +1,4 @@
-export const mixin = {
+const anim = {
 	watch: {
 		navIndex: function (val) {
 			this.animCreate(val, this.anim_now, this.anim_time||200)
@@ -54,4 +54,49 @@ export const mixin = {
 			list[index].dom.classList.remove(list[index].class);
 		}
 	},
+}
+
+
+const api = {
+	data () {
+		return {
+			api_url: 'http://localhost/api/web/index.php?r=',
+		}
+	},
+	methods:{
+		post({url, data={}, success, fail}){
+			this.$axios.post(this.api_url+url,data).then(function (res) { 
+				if (res.data.status == 1) {
+					success && success(res.data.data)
+				} else {
+					alert(res.data.message)
+					fail && fail()
+				}
+			}).catch(function (error) { 
+				console.log(error) 
+				fail && fail()
+			})
+		},
+		get({url, data={}, success, fail}){
+			this.$axios.get(this.api_url+url,data).then(function (res) { 
+				if (res.data.status == 1) {
+					console.log(res) 
+					success && success(res.data.data)
+				} else {
+					alert(res.data.message)
+					fail && fail()
+				}
+			}).catch(function (error) { 
+				console.log(error) 
+				fail && fail()
+			})
+		}
+
+	}
+}
+
+
+module.exports = {
+	anim,
+	api
 }
