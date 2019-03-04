@@ -24,7 +24,7 @@
             </div>
 		</div>
 		<div :class="['product-modal',show_modal?'active':'']" @click="closeModal">
-			<img :src="modal_image"></img>
+			<img :src="image_url+modal_image"></img>
 		</div>
 	</div>
 </template>
@@ -38,28 +38,7 @@ export default {
 	name: 'HelloWorld',
 	data () {
 		return {
-			product_list: [
-				{
-					name: '“赛蜜助手”小程序',
-					text: '微商服务类小程序，为在赛蜜公司时的项目，该项目开发的主要人群为赛蜜国际注册用户以及其好友，秉承高内聚低耦合的原则，对重复使用的代码，将其封装成组件以及公用方法，并具有良好的机型适配、版本兼容。',
-					image: require('@/images/smzs.jpg'),
-				}, 
-				{
-					name: 'LFC',
-					text: '使用生活空余时间，并结合自身所新学习的知识，恰逢朋友有需求，帮其完成pc端、小程序端以及后台管理系统，用于磨炼自身的前端技能，并了解服务器和NodeJs等后台的相关知识。',
-					href: 'http://www.liveforcool.com',
-				},
-				{
-					name: '“21天改变之旅”小程序',
-					text: '根据公司领导人需求，完成该小程序，该项目开发的主要人群为购买《21天改变之旅》这本书的用户以及预购用户，在自己原有的技术知识上实践，了解更多的技术知识。',
-					image: require('@/images/gbzl.jpg'),
-				}, 
-				{
-					name: '农场小游戏（手机端）',
-					text: '模仿支付宝的蚂蚁庄园，实现一个养鸡的农场小游戏，在游戏方面试验自己的技术知识并扩展更多相关方面的知识，提升自身的价值。',
-					href: 'https://www.wangerdi.cn/farm',
-				},
-			],
+			product_list: [],
 			anim_index: 0,
 			anim_now: 4,
 			anim_list: [],
@@ -72,8 +51,49 @@ export default {
 		navIndex: function (val) {
 			if(this.show_modal) this.closeModal()
 		},
+		product_list: function(){
+			var _this = this 
+			this.$nextTick(function(){
+				_this.get_data = true
+				_this.setSwiper()
+				_this.judgeAnim()
+				_this.animCreate(_this.navIndex, _this.anim_now, _this.anim_time||200)
+			})
+		}
+
 	},
 	methods:{
+		// 获取数据
+		pageData(){
+			var _this = this
+			this.post({
+				url: 'product/index',
+				data: {},
+				success: function(res){
+					_this.product_list = res.product_list
+				}
+			})
+		},
+		setSwiper(){
+			new this.$Swiper('.swiper-product', {
+				loop: true,	
+				effect: 'cube',
+				grabCursor: true,
+				cubeEffect: {
+					shadow: true,
+					slideShadows: true,
+					shadowOffset: 10,
+					shadowScale: 0.9,
+				},
+				pagination: {
+					el: '.product-pagination',
+					clickable :true,
+					bulletClass : 'production-bullet',
+					bulletActiveClass: 'production-bullet-active',
+				},
+			})
+		},
+
 		pcAnim() { 
 			// 创建动画列表
 			let list = this.anim_list,
@@ -112,6 +132,7 @@ export default {
 			} else { 
 				this.pcAnim()
 			}
+			this.animCreate(this.navIndex, this.anim_now, this.anim_time||200)
 		},
 		openModal(image) { 
 			this.modal_image = image
@@ -122,23 +143,6 @@ export default {
 		},
 	},
 	mounted () { 
-		new this.$Swiper('.swiper-product', {
-			loop: true,	
-			effect: 'cube',
-			grabCursor: true,
-			cubeEffect: {
-				shadow: true,
-				slideShadows: true,
-				shadowOffset: 10,
-				shadowScale: 0.9,
-			},
-			pagination: {
-				el: '.product-pagination',
-				clickable :true,
-				bulletClass : 'production-bullet',
-				bulletActiveClass: 'production-bullet-active',
-			},
-		})
 
 		// 缩放时执行
 		var _this = this

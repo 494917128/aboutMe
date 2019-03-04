@@ -33,11 +33,11 @@ export default {
     my_info: function(){
       var _this = this 
       this.$nextTick(function(){
+        _this.get_data = true
         _this.setAnim()
       })
     }
   },
-
   methods: {
     // 获取数据
     pageData(){
@@ -70,10 +70,10 @@ export default {
           class: 'anim'
         })
       }
+      this.animCreate(this.navIndex, this.anim_now, this.anim_time||200)
     },
   },
   mounted(){
-    this.pageData()
   },
 }
 </script>

@@ -27,6 +27,7 @@ export default {
     text: function(){
       var _this = this 
       this.$nextTick(function(){
+        _this.get_data = true
         _this.setAnim()
       })
     }

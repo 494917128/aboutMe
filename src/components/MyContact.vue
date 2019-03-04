@@ -12,7 +12,7 @@
 				<i :class="['iconfont', item.icon]"></i>
 				<span class="footer-prompt" v-if="item.text">{{item.text}}</span>
 				<div class="footer-prompt" style="padding: 2px;" v-else-if="item.image">
-					<img :src="item.image">
+					<img :src="image_url+item.image">
 				</div>
 			</a>
 		</div>
@@ -29,56 +29,66 @@ export default {
 	data () {
 		return {
 			header_list: ['灵感', '代码', '梦想', '未来'],
-			body_list: [
-				'学习是一个充实愉悦的过程', 
-				'喜欢尝试，期待新鲜事物', 
-				'前端即兴趣，兴趣即未来', 
-				'行路有良友，便是捷径', 
-				'期待有机会与您共事！'
-			],
-			footer_list: [
-				{ icon: 'icon-github', text: 'GitHub', href: 'https://github.com/494917128' }, 
-				{ icon: 'icon-email', text: '494917128@qq.com' }, 
-				{ icon: 'icon-qq', image: require('@/images/qq.jpg') }, 
-				{ icon: 'icon-80fenxiangweixin', image: require('@/images/wechat.jpg') }, 
-				{ icon: 'icon-homephone', text: '13566296373' }, 
-			],
+			body_list: [],
+			footer_list: [],
 			anim_index: 0,
 			anim_now: 5,
 			anim_list: [],
 		}
 	},
+	watch:{
+		body_list:function(){
+			var _this = this 
+			this.$nextTick(function(){
+				_this.get_data = true
+				_this.setAnim()
+			})
+		}
+	},
 	methods:{
+		// 获取数据
+		pageData(){
+			var _this = this
+			this.post({
+				url: 'contact/index',
+				data: {},
+				success: function(res){
+					_this.body_list = res.body_list
+					_this.footer_list = res.footer_list
+				}
+			})
+		},
+		// 创建动画列表
+		setAnim(){
+			let list   = this.anim_list,
+			    header = document.querySelectorAll(".my-contact .header-item"),
+			    body   = document.querySelectorAll(".my-contact .body-item"),
+			    footer = document.querySelectorAll(".my-contact .footer-item")
 
+			for(let i = 0,len = header.length; i < len; i++){
+				list.push({
+					dom: header[i],
+					class: 'anim'
+				})
+			}
+
+			for(let i = 0,len = body.length; i < len; i++){
+				list.push({
+					dom: body[i],
+					class: 'anim'
+				})
+			}
+
+			for(let i = 0,len = footer.length; i < len; i++){
+				list.push({
+					dom: footer[i],
+					class: 'anim'
+				})
+			}
+			this.animCreate(this.navIndex, this.anim_now, this.anim_time||200)
+		},
 	},
 	mounted () { 
-		// 创建动画列表
-		let list   = this.anim_list,
-		    header = document.querySelectorAll(".my-contact .header-item"),
-		    body   = document.querySelectorAll(".my-contact .body-item"),
-		    footer = document.querySelectorAll(".my-contact .footer-item")
-
-		for(let i = 0,len = header.length; i < len; i++){
-			list.push({
-				dom: header[i],
-				class: 'anim'
-			})
-		}
-
-		for(let i = 0,len = body.length; i < len; i++){
-			list.push({
-				dom: body[i],
-				class: 'anim'
-			})
-		}
-
-		for(let i = 0,len = footer.length; i < len; i++){
-			list.push({
-				dom: footer[i],
-				class: 'anim'
-			})
-		}
-
 	}
 }
 </script>

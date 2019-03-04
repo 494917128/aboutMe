@@ -1,7 +1,17 @@
 const anim = {
+	data () {
+		return {
+			get_data: false, // 判断是否加载过数据
+		}
+	},
 	watch: {
 		navIndex: function (val) {
-			this.animCreate(val, this.anim_now, this.anim_time||200)
+			var _this = this,
+				index = _this.anim_now
+
+			if (val == index && !this.get_data) { 
+				this.pageData()
+			}
 		},
 	},
 	methods:{
@@ -60,7 +70,8 @@ const anim = {
 const api = {
 	data () {
 		return {
-			api_url: 'http://localhost/api/web/index.php?r=',
+			api_url: 'https://www.wangerdi.cn/api/web/index.php?r=',
+			image_url: 'https://www.wangerdi.cn/api/web/',
 		}
 	},
 	methods:{

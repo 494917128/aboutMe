@@ -37,82 +37,73 @@ export default {
 	name: 'HelloWorld',
 	data () {
 		return {
-			production_list: [
-				{
-					icon: 'icon-qianduan',
-					icon_color: '#F03D37',
-					company: '杭州赛蜜网络科技有限公司',
-					post: 'web前端',
-					start_time: '2017年12月',
-					end_time: null,
-					explain: '小程序,vue,jquery,es6,iconfont等',
-					text: [
-						'负责快速构建高质量的前端页面',
-						'负责小程序的逻辑设计以及框架搭建',
-						'维护并完善公司已有的后台系统',
-						'测试并完善代码的适配性，完整性，复用性等',
-						'根据需求高效完成新功能',
-					],
-				}, 
-				{
-					icon: 'icon-xiaochengxu',
-					icon_color: '#16D328',
-					company: '杭州点艺信息科技有限公司',
-					post: '小程序开发',
-					start_time: '2017年5月',
-					end_time: '2017年12月',
-					explain: '小程序,jssdk,html5,css3,javascript等',
-					text: [
-						'负责小程序及微信页面开发',
-						'根据业务需求编辑相应的逻辑代码',
-						'测试程序bug并对其进行修复和完善',
-						'学习更多的前端知识，提升自己的前端技术',
-					],
-				}, 
-			],
+			production_list: [],
 			anim_index: 0,
 			anim_now: 3,
 			anim_list: [],
 		}
 	},
+	watch: {
+		production_list: function(){
+			var _this = this 
+			this.$nextTick(function(){
+				_this.get_data = true
+				_this.setSwiper()
+				_this.setAnim()
+			})
+		}
+	},
 	methods:{
+		// 获取数据
+		pageData(){
+			var _this = this
+			this.post({
+				url: 'production/index',
+				data: {},
+				success: function(res){
+					_this.production_list = res.production_list
+				}
+			})
+		},
+		setSwiper(){
+			new this.$Swiper('.swiper-production', {
+				speed: 600,
+				slideActiveClass: 'active',
+				pagination: {
+					el:'.production-pagination',
+					clickable :true,
+					bulletClass : 'production-bullet',
+					bulletActiveClass: 'production-bullet-active',
+				},
 
+				//窗口缩放时设置width
+				on: {
+					resize: function(){
+						this.params.width = window.innerWidth;
+						this.update();
+					},
+				},
+			})
+		},
+		// 创建动画列表
+		setAnim(){
+			let list       = this.anim_list,
+			    swiper     = document.querySelector(".my-production .swiper-production"),
+			    pagination = document.querySelector(".my-production .production-pagination")
+
+			list.push({
+				dom: swiper,
+				class: 'anim'
+			})
+
+			list.push({
+				dom: pagination,
+				class: 'anim'
+			})
+			this.animCreate(this.navIndex, this.anim_now, this.anim_time||200)
+		},
 	},
 	mounted () { 
-		new this.$Swiper('.swiper-production', {
-			speed: 600,
-			slideActiveClass: 'active',
-			pagination: {
-				el:'.production-pagination',
-				clickable :true,
-				bulletClass : 'production-bullet',
-				bulletActiveClass: 'production-bullet-active',
-			},
-
-			//窗口缩放时设置width
-			on: {
-				resize: function(){
-					this.params.width = window.innerWidth;
-					this.update();
-				},
-			},
-		})
-
-		// 创建动画列表
-		let list       = this.anim_list,
-		    swiper     = document.querySelector(".my-production .swiper-production"),
-		    pagination = document.querySelector(".my-production .production-pagination")
-
-		list.push({
-			dom: swiper,
-			class: 'anim'
-		})
-
-		list.push({
-			dom: pagination,
-			class: 'anim'
-		})
-
 	}
 }
 </script>

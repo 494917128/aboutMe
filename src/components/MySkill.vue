@@ -50,28 +50,9 @@ export default {
 		return {
 			inner_duration: 6,
 			out_duration: 8,
-			inner_skill:[
-				{text:'Node.js',color:'rgba(179,164,140,0.8)'},
-				{text:'ES6',color:'rgba(171,209,220,0.8)'},
-				{text:'vue',color:'rgba(238,215,163,0.8)'},
-				{text:'微信<br>小程序',color:'rgba(207,184,178,0.8)'},
-			],
-			out_skill:[
-				{text:'less',color:'rgba(121,100,102,0.8)'},
-				{text:'hbuilder<br>h5+',color:'rgba(49,65,82,0.8)'},
-				{text:'jQuery',color:'rgba(76,157,160,0.8)'},
-				{text:'webpack',color:'rgba(66,66,66,0.8)'},
-				{text:'微信<br>小游戏',color:'rgba(193,131,106,0.8)'},
-				{text:'react',color:'rgba(117,148,179,0.8)'},
-				{text:'apicloud',color:'rgba(71,83,94,0.8)'},
-				{text:'Git<br>SVN',color:'rgba(147,147,189,0.8)'},
-			],
-			text: [
-				'精通小程序开发及vue单页面开发',
-				'扎实的HTML5+CSS3基础',
-				'了解APP/PC端/手机端的各类开发',
-				'良好的逻辑思维，快速思考解决方法',
-			],
+			inner_skill:[],
+			out_skill:[],
+			text: [],
 			anim_index: 0,
 			anim_now: 2,
 			anim_time: 100,
@@ -82,6 +63,7 @@ export default {
 		inner_skill: function(){
 			var _this = this 
 			this.$nextTick(function(){
+				_this.get_data = true
 				_this.setAnim()
 			})
 		}
@@ -91,10 +73,11 @@ export default {
 		pageData(){
 			var _this = this
 			this.post({
-				url: 'info/index',
+				url: 'skill/index',
 				data: {},
 				success: function(res){
-					_this.my_info = res.info
+					_this.inner_skill = res.inner_skill
+					_this.out_skill = res.out_skill
 					_this.text = res.text
 				}
 			})
@@ -138,12 +121,10 @@ export default {
 					class: 'anim'
 				})
 			}
+			this.animCreate(this.navIndex, this.anim_now, this.anim_time||200)
 		},
 	},
 	mounted(){
-		this.pageData()
-				this.setAnim()
-
 	}
 }
 </script>
