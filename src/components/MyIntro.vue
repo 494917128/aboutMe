@@ -1,7 +1,7 @@
 <template>
   <div class="my-intro">
     <div class="text justify-center">
-      <img src="@/images/image_none.png" class="photo">
+      <img :src="photo||require('@/images/image_none.png')" class="photo">
       <div class="line"></div>
       <div class="text-item" v-for="(item,index) in text" :key="index">{{item}}</div>
     </div>
@@ -41,6 +41,7 @@ export default {
         data: {},
         success: function(res){
           _this.text = res.list
+          _this.photo = res.photo
         }
       })
     },

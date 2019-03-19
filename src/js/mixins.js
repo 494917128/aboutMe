@@ -70,14 +70,14 @@ const anim = {
 const api = {
 	data () {
 		return {
-			api_url: 'https://www.wangerdi.cn/api/web/index.php?r=',
+			api_url: 'https://www.wangerdi.cn/api/addons/execute?addon=resume&route=',
 			image_url: 'https://www.wangerdi.cn/api/web/',
 		}
 	},
 	methods:{
 		post({url, data={}, success, fail}){
 			this.$axios.post(this.api_url+url,data).then(function (res) { 
-				if (res.data.status == 1) {
+				if (res.data.status == 1 || res.data.code == 200) {
 					success && success(res.data.data)
 				} else {
 					alert(res.data.message)
@@ -90,8 +90,7 @@ const api = {
 		},
 		get({url, data={}, success, fail}){
 			this.$axios.get(this.api_url+url,data).then(function (res) { 
-				if (res.data.status == 1) {
-					console.log(res) 
+				if (res.data.status == 1 || res.data.code == 200) {
 					success && success(res.data.data)
 				} else {
 					alert(res.data.message)

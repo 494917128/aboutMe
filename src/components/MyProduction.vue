@@ -5,7 +5,7 @@
 				<div class="swiper-slide" v-for="(item,index) in production_list" :key="index">
 					<div class="banner">
 						<div class="justify-center banner-left">
-							<i :class="['iconfont',item.icon]" :style="{color: item.icon_color}"></i>
+							<i :class="['iconfont',item.icon]" :style="{'color': item.color}"></i>
 						</div>
 	                    <div class="banner-line0"></div>
 						<div class="justify-center banner-right">

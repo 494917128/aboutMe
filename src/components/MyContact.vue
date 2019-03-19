@@ -12,7 +12,7 @@
 				<i :class="['iconfont', item.icon]"></i>
 				<span class="footer-prompt" v-if="item.text">{{item.text}}</span>
 				<div class="footer-prompt" style="padding: 2px;" v-else-if="item.image">
-					<img :src="image_url+item.image">
+					<img :src="item.image">
 				</div>
 			</a>
 		</div>

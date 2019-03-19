@@ -108,7 +108,6 @@ export default {
   mounted () { 
     var _this = this
     // 新建swiper
-    console.log(this)
     this.swiper = new this.$Swiper('.swiper-main',{
       direction : 'vertical',
       resistanceRatio: 0,// 边缘无法拖动

@@ -24,7 +24,7 @@
             </div>
 		</div>
 		<div :class="['product-modal',show_modal?'active':'']" @click="closeModal">
-			<img :src="image_url+modal_image"></img>
+			<img :src="modal_image"></img>
 		</div>
 	</div>
 </template>
