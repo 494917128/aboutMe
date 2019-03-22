@@ -21,6 +21,7 @@ export default {
       anim_index: 0,
       anim_now: 0,
       anim_list: [],
+      photo: '',
     }
   },
   watch: {
@@ -44,6 +45,19 @@ export default {
           _this.photo = res.photo
         }
       })
+      // this.post2({
+      //   url: 'http://www.wangerdi.com/api/v1/site/login',
+      //   data: {
+      //     username: 'wangerdi',
+      //     password: 'wangerdi',
+      //     group: 'app',
+      //   },
+      //   success: function(res){
+      //     _this.body_list = res.body_list
+      //     _this.footer_list = res.footer_list
+      //   }
+      // })
+
     },
     // 创建动画列表
     setAnim(){
