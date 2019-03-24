@@ -70,8 +70,8 @@ const anim = {
 const api = {
 	data () {
 		return {
-			api_url: 'http://www.wangerdi.com/api/addons/execute?addon=resume&route=',
-			image_url: 'http://www.wangerdi.com/api/web/',
+			api_url: 'http://localhost/rageframe2/web/api/addons/execute?addon=resume&route=',
+			api_url2: 'http://localhost/rageframe2/web/api/',
 		}
 	},
 	methods:{
@@ -110,11 +110,19 @@ const api = {
 	    delCookie(name) {
 	      setCookie(name, ' ', -1);
 	    },
-		post({url, data={}, success, fail}){
-			var token = localStorage.getItem('about_me_access_token')||''
-			this.$axios.post(this.api_url+url+'&access-token='+token,data).then(function (res) { 
+		request({method='post', prefix_url, url, data={}, success, fail}){
+			var _this = this,
+				token = localStorage.getItem('about_me_access_token')||''
+			this.$axios({
+				method: method || 'post',
+				url: (prefix_url || this.api_url) + url + '&access-token=' + token,
+				data: data,
+			}).then(function (res) { 
 				if (res.data.status == 1 || res.data.code == 200) {
 					success && success(res.data.data)
+				} else if (res.data.code == 401) { // 代表登录失败，跳转到登录页面
+					alert('token失效，请重新登录');
+					_this.$router.push({name: 'login'});
 				} else {
 					alert(res.data.message)
 					fail && fail()
@@ -124,34 +132,6 @@ const api = {
 				fail && fail()
 			})
 		},
-		post2({url, data={}, success, fail}){
-			this.$axios.post(url,data).then(function (res) { 
-				if (res.data.status == 1 || res.data.code == 200) {
-					success && success(res.data.data)
-				} else {
-					alert(res.data.message)
-					fail && fail()
-				}
-			}).catch(function (error) { 
-				console.log(error) 
-				fail && fail()
-			})
-		},
-		get({url, data={}, success, fail}){
-			var token = localStorage.getItem('about_me_access_token')||''
-			this.$axios.get(this.api_url+url+'&access-token='+token,data).then(function (res) { 
-				if (res.data.status == 1 || res.data.code == 200) {
-					success && success(res.data.data)
-				} else {
-					alert(res.data.message)
-					fail && fail()
-				}
-			}).catch(function (error) { 
-				console.log(error) 
-				fail && fail()
-			})
-		}
-
 	}
 }
 

@@ -57,7 +57,7 @@ export default {
 		// 获取数据
 		pageData(){
 			var _this = this
-			this.post({
+			this.request({
 				url: 'production/index',
 				data: {},
 				success: function(res){

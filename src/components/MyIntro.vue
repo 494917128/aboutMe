@@ -37,27 +37,15 @@ export default {
     // 获取数据
     pageData(){
       var _this = this
-      this.post({
+      this.request({
         url: 'intro/index',
         data: {},
         success: function(res){
           _this.text = res.list
           _this.photo = res.photo
+          document.title = (res.username||'') + '的前端简历' // 设置标题
         }
       })
-      // this.post2({
-      //   url: 'http://www.wangerdi.com/api/v1/site/login',
-      //   data: {
-      //     username: 'wangerdi',
-      //     password: 'wangerdi',
-      //     group: 'app',
-      //   },
-      //   success: function(res){
-      //     _this.body_list = res.body_list
-      //     _this.footer_list = res.footer_list
-      //   }
-      // })
-
     },
     // 创建动画列表
     setAnim(){

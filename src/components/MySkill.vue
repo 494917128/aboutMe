@@ -72,7 +72,7 @@ export default {
 		// 获取数据
 		pageData(){
 			var _this = this
-			this.post({
+			this.request({
 				url: 'skill/index',
 				data: {},
 				success: function(res){
