@@ -119,7 +119,7 @@ const api = {
 				data: data,
 			}).then(function (res) { 
 				if (res.data.status == 1 || res.data.code == 200) {
-					success && success(res.data.data)
+					success && success(res.data.data, res.data.message||'')
 				} else if (res.data.code == 401) { // 代表登录失败，跳转到登录页面
 					alert('token失效，请重新登录');
 					_this.$router.push({name: 'login'});

@@ -9,7 +9,7 @@
 
       <div class="header-nav-cover justify-center" @click="navTitle"></div>
       <div class="header-nav">
-        <div :class="['header-nav-item','flexible',index==nav_list_index?'active':'']" v-for="(item,index) in nav_list" @click="navItem(index)">
+        <div :class="['header-nav-item','flexible',index==nav_list_index?'active':'']" v-for="(item,index) in nav_list" @click="item.layout?layout():navItem(index)">
           <i :class="['justify-center','iconfont',item.icon]"></i>
           <span>{{item.text}}</span>
         </div>
@@ -53,6 +53,7 @@
     <div class="swiper-pagination"></div>
 
     <i class="iconfont icon-top" v-if="this.nav_list.length != this.nav_list_index + 1" @click="scrollNext"></i>
+    <a class="layout" @click="layout">退出登录</a>
   </div>
 </template>
 
@@ -76,6 +77,7 @@ export default {
         {icon:'icon-realexperience',text:'经历'},
         {icon:'icon-zuopinji',text:'项目'},
         {icon:'icon-lianxi',text:'联系我'},
+        {icon:'icon-zhuangtai',text:'退出登录',layout: true},
       ],
       nav_list_index: 0,
       nav_active: false,
@@ -103,6 +105,11 @@ export default {
     },
     scrollNext: function () { 
       this.swiper.slideNext();
+    },
+    layout: function(){
+        localStorage.removeItem('about_me_access_token')
+        localStorage.removeItem('about_me_refresh_token')
+        this.$router.push({name: 'login'})
     }
   },
   mounted () { 
@@ -130,12 +137,20 @@ export default {
         },
       },
     });
-
+    
     
   },
 }
 </script>
 
 <style>
-
+.layout{
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  color: #fff;
+  font-size: 14px;
+  padding: 10px;
+}
 </style>

@@ -2,8 +2,8 @@
   <div>
     <input type='text' v-model='username' placeholder='用户名' />
     <input type='password' v-model='password' placeholder='密码' />
-    <button @click='login'>登录</button>
-    <router-link to="/signup">去注册</router-link>
+    <button @click='signup'>注册</button>
+    <router-link to="/login">去登录</router-link>
   </div>
 </template>
 
@@ -12,7 +12,7 @@ import {api} from '@/js/mixins'
 
 export default {
   mixins: [api],
-  name: 'Login',
+  name: 'Signup',
   data () {
     return {
       username: '',
@@ -23,6 +23,22 @@ export default {
 
   },
   methods:{
+    signup(){
+      var _this = this,
+        username = this.username,
+        password = this.password
+      this.request({
+        url: 'login/signup',
+        data: {
+          username: username,
+          password: password,
+        },
+        success: function(res, message){
+          alert(message)
+          _this.login();
+        }
+      })
+    },
     login(){
       var _this = this,
         username = this.username,
