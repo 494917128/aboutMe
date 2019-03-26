@@ -9,7 +9,8 @@
 
       <div class="header-nav-cover justify-center" @click="navTitle"></div>
       <div class="header-nav">
-        <div :class="['header-nav-item','flexible',index==nav_list_index?'active':'']" v-for="(item,index) in nav_list" @click="item.layout?layout():navItem(index)">
+        <div :class="['header-nav-item','flexible',index==nav_list_index?'active':'']" v-for="(item,index) in nav_list" 
+          @click="bindtap(item.bindtap,index)">
           <i :class="['justify-center','iconfont',item.icon]"></i>
           <span>{{item.text}}</span>
         </div>
@@ -53,6 +54,7 @@
     <div class="swiper-pagination"></div>
 
     <i class="iconfont icon-top" v-if="this.nav_list.length != this.nav_list_index + 1" @click="scrollNext"></i>
+    <a class="goto_admin" @click="gotoAdmin">前往后台</a>
     <a class="layout" @click="layout">退出登录</a>
   </div>
 </template>
@@ -65,8 +67,10 @@ import MySkill from '@/components/MySkill'
 import MyProduction from '@/components/MyProduction'
 import MyProduct from '@/components/MyProduct'
 import MyContact from '@/components/MyContact'
+import {api} from '@/js/mixins'
 
 export default {
+  mixins: [api],
   name: 'HelloWorld',
   data () {
     return {
@@ -77,7 +81,8 @@ export default {
         {icon:'icon-realexperience',text:'经历'},
         {icon:'icon-zuopinji',text:'项目'},
         {icon:'icon-lianxi',text:'联系我'},
-        {icon:'icon-zhuangtai',text:'退出登录',layout: true},
+        {icon:'icon-zhuangtai',text:'退出登录',layout: true, bindtap:'layout'},
+        {icon:'icon-link',text:'前往后台',admin: true, bindtap:'gotoAdmin'},
       ],
       nav_list_index: 0,
       nav_active: false,
@@ -107,9 +112,20 @@ export default {
       this.swiper.slideNext();
     },
     layout: function(){
-        localStorage.removeItem('about_me_access_token')
-        localStorage.removeItem('about_me_refresh_token')
-        this.$router.push({name: 'login'})
+      localStorage.removeItem('about_me_access_token')
+      localStorage.removeItem('about_me_refresh_token')
+      this.$router.push({name: 'login'})
+      this.navTitle()
+    },
+    gotoAdmin: function(){
+      window.open(this.localhost+'backend',"_blank")
+    },
+    bindtap:function(name,index){
+      if (name) {
+        this[name]()
+      } else {
+        this.navItem(index)
+      }
     }
   },
   mounted () { 
@@ -144,13 +160,22 @@ export default {
 </script>
 
 <style>
-.layout{
+.layout,.goto_admin{
   position: absolute;
   top: 0;
-  right: 0;
   z-index: 1;
   color: #fff;
   font-size: 14px;
   padding: 10px;
+  height: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.layout{
+  right: 0;
+}
+.goto_admin{
+  left: 0;
 }
 </style>

@@ -72,6 +72,7 @@ const api = {
 		return {
 			api_url: 'http://localhost/rageframe2/web/api/addons/execute?addon=resume&route=',
 			api_url2: 'http://localhost/rageframe2/web/api/',
+			localhost: 'http://localhost/rageframe2/web/',
 		}
 	},
 	methods:{
@@ -117,6 +118,10 @@ const api = {
 				method: method || 'post',
 				url: (prefix_url || this.api_url) + url + '&access-token=' + token,
 				data: data,
+				dataType: "json",
+				headers: {
+					'Content-Type': 'application/json;charset=UTF-8'
+				},
 			}).then(function (res) { 
 				if (res.data.status == 1 || res.data.code == 200) {
 					success && success(res.data.data, res.data.message||'')
