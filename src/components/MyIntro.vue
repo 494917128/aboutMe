@@ -5,6 +5,16 @@
       <div class="line"></div>
       <div class="text-item" v-for="(item,index) in text" :key="index">{{item}}</div>
     </div>
+
+<!--     <Modal 
+      :show='modal_show' 
+      :title='modal_title' 
+      :text='modal_text' 
+      :noCancel='modal_noCancel' 
+      :cancelText='modal_cancelText' 
+      :confirmText='modal_confirmText' 
+      :stopCover='modal_stopCover' /> -->
+
   </div>
 </template>
 
