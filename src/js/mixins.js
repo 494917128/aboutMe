@@ -105,7 +105,7 @@ export const api = {
 					success && success(res.data.data, res.data.message||'')
 				} else if (res.data.code == 401) { // 代表登录失败，跳转到登录页面
 					// alert('token失效，请重新登录');
-					_this.$modal.modalAlert({
+					_this.$modal.showModal({
 						title: '提示',
 						text: 'token失效，请重新登录',
 						success: function(){

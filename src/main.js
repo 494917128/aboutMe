@@ -16,7 +16,7 @@ Vue.prototype.$axios = axios
 
 // modal的方法
 Vue.prototype.$modal = {
-	modalAlert(content){
+	showModal(content){
 		Event.$emit('modal/show', content)
 	}
 }

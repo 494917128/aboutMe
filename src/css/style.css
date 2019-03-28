@@ -199,6 +199,12 @@ li {
     -webkit-align-items: flex-start;
     -webkit-box-align: start;
 }
+.flexible-column{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    flex-direction: column;
+}
 
 .col-1 {
     flex: 1;

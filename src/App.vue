@@ -20,7 +20,7 @@ export default {
 	data: ()=>{
 		return {
 			modal_show: false,
-			modal_title: '',
+			modal_title: '提示',
 			modal_text: '',
 			modal_noCancel: true,
 			modal_cancelText: '取消',
@@ -32,7 +32,7 @@ export default {
 		Modal, 
 	},
 	created(){
-		Event.$on('modal/show',({title, text, no_cancel=true, cancel_text='取消', confirm_text='确定', stop_cover=false, success, fail, complete})=>{
+		Event.$on('modal/show',({title='提示', text, no_cancel=true, cancel_text='取消', confirm_text='确定', stop_cover=false, success, fail, complete})=>{
 			this.modal_show = true
 			this.modal_title = title
 			this.modal_text = text
