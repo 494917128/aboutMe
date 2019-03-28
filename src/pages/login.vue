@@ -4,15 +4,18 @@
       <img :src="require('@/images/login-bg.jpg')" class="login-bg" />
     </div>
     <div class="login-form flexible-column justify-center">
-      <img :src="require('@/images/logo.png')" class="login-logo" />
+      <div class="login-header justify-center">
+        <i class="iconfont icon-icon" v-if='type==1'></i>
+        <i class="iconfont icon-zhuce" v-else></i>
+      </div>
       <h2 class="login-form-title">{{type==1?"登录":"注册"}}</h2>
       <div class="login-form-content flexible-column">
         <div class="login-input-view flexible">
-          <i class="iconfont icon-icon"></i>
+          <i class="iconfont icon-yonghu"></i>
           <input type='text' v-model='username' placeholder='用户名' class="login-input col-1" />
         </div>
         <div class="login-input-view flexible">
-          <i class="iconfont icon-icon"></i>
+          <i class="iconfont icon-wodemima"></i>
           <input type='password' v-model='password' placeholder='密码' class="login-input col-1" />
         </div>
         <button class="login-btn login-btn-blue justify-center" @click='login' v-if='type==1'>登录</button>
@@ -137,13 +140,15 @@ export default {
   max-width: 450px;
   border-radius: 20px;
 }
-.login-logo{
-  width: 80px;
-  height: 80px;
-  margin-top: -40px;
+.login-header{
+  width: 6rem;
+  height: 6rem;
+  margin-top: -3rem;
   border-radius: 50%;
   background-color: #049bb6;
-  object-fit: cover;
+}
+.login-header .iconfont{
+  font-size: 3rem;
 }
 .login-form-title{
   font-size: 2rem;
