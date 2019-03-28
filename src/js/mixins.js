@@ -104,19 +104,15 @@ export const api = {
 				if (res.data.status == 1 || res.data.code == 200) {
 					success && success(res.data.data, res.data.message||'')
 				} else if (res.data.code == 401) { // 代表登录失败，跳转到登录页面
-					// alert('token失效，请重新登录');
 					_this.$modal.showModal({
 						title: '提示',
 						text: 'token失效，请重新登录',
 						success: function(){
 							_this.$router.push({name: 'login'});
 						},
-						fail: function(){
-							console.log('失败')
-						},
 					})
 				} else {
-					alert(res.data.message)
+					_this.$modal.showModal({ text: res.data.message })
 					fail && fail()
 				}
 			}).catch(function (error) { 
